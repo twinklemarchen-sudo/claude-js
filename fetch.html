@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Gallery</title>
+<style>
+  /* 페이지 기본 스타일: 여백 제거 + 배경색 + 폰트 */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: sans-serif; background: #f4f5f7; padding: 32px 16px; }
+  h1 { text-align: center; margin-bottom: 24px; color: #222; }
+
+  /* 갤러리: flex + wrap 으로 한 줄에 5개씩 2행(총 10장) 배치 */
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* 카드: (100% - 간격 4개) / 5 = 한 줄 5열 너비 */
+  .card {
+    flex: 0 0 calc((100% - 16px * 4) / 5);
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+    transition: transform .2s;
+  }
+  .card:hover { transform: translateY(-4px); }
+
+  /* 이미지: 카드 너비에 맞춘 정사각형 */
+  .card img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: #ddd; }
+
+  /* 제목: 길면 2줄까지만 표시 */
+  .card p {
+    padding: 8px; font-size: 12px; color: #444;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  .message { width: 100%; text-align: center; color: #888; }
+
+  /* 카드 클릭 가능 표시 */
+  .card { cursor: pointer; }
+
+  /* 팝업 배경(오버레이): 화면 전체를 덮고 flex로 내용을 정중앙 배치, 기본은 숨김 */
+  .modal {
+    position: fixed; inset: 0; z-index: 100;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(0, 0, 0, .7);
+  }
+  .modal.open { display: flex; }
+
+  /* 팝업 본체: 확대 이미지 + 제목, 화면을 넘지 않도록 최대 크기 제한 */
+  .modal-content {
+    position: relative; background: #fff; border-radius: 10px;
+    padding: 16px; width: min(90vw, 600px); max-height: 90vh; overflow: auto;
+    animation: zoomIn .2s ease-out;
+  }
+  .modal-content img { display: block; width: 100%; border-radius: 6px; }
+  .modal-content p { margin-top: 12px; color: #333; text-align: center; }
+  @keyframes zoomIn { from { transform: scale(.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  /* 닫기(X) 버튼: 팝업 우측 상단 */
+  .modal-close {
+    position: absolute; top: 8px; right: 8px;
+    width: 32px; height: 32px; border: none; border-radius: 50%;
+    background: rgba(0, 0, 0, .65); color: #fff; font-size: 20px; line-height: 1; cursor: pointer;
+  }
+  .modal-close:hover { background: #e53935; }
+</style>
+</head>
+<body>
+  <h1>Photo Gallery</h1>
+  <!-- 이미지 카드가 렌더링될 컨테이너 -->
+  <div id="gallery" class="gallery"><p class="message">Loading...</p></div>
+
+  <!-- 팝업창: 오버레이 안에 이미지/제목/닫기 버튼 -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button id="modalClose" class="modal-close" aria-label="닫기">&times;</button>
+      <img id="modalImg" src="" alt="">
+      <p id="modalTitle"></p>
+    </div>
+  </div>
+
+<script>
+  /**
+   * [재사용 함수 1] fetchData
+   * - 어떤 URL이든 fetch로 요청해서 JSON으로 반환하는 비동기 함수
+   * - async/await 사용, 응답이 실패(res.ok === false)하면 에러를 던짐
+   */
+  async function fetchData(url) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  /**
+   * [재사용 함수 2] getPhotos
+   * - jsonplaceholder /photos 에서 limit 개수만큼 사진 목록을 가져옴
+   * - _limit 쿼리로 서버에서 개수를 제한 (기본 10개 = 2행 x 5열)
+   */
+  async function getPhotos(limit = 30) {
+    return fetchData(`https://jsonplaceholder.typicode.com/photos?_limit=${limit}`);
+  }
+
+  /**
+   * [재사용 함수 3] renderGallery
+   * - 사진 배열을 받아 container 안에 카드(img + 제목)를 만들어 넣음
+   * - photo.url(큰 이미지)을 img.src 로 사용
+   * - via.placeholder.com 이 막힌 경우를 대비해 onerror 시 picsum 이미지로 대체
+   */
+  function renderGallery(container, photos) {
+    container.innerHTML = '';
+    for (const photo of photos) {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const img = document.createElement('img');
+      img.src = photo.url;
+      img.alt = photo.title;
+      img.onerror = () => { img.onerror = null; img.src = `https://picsum.photos/seed/${photo.id}/600`; };
+
+      const title = document.createElement('p');
+      title.textContent = photo.title;
+
+      card.append(img, title);
+      card.addEventListener('click', () => openModal(img.src, photo.title)); // 카드 클릭 시 팝업 열기
+      container.appendChild(card);
+    }
+  }
+
+  /**
+   * [팝업 함수 1] openModal
+   * - 클릭한 카드의 이미지(실제 로드된 src)와 제목을 팝업에 채우고 표시
+   */
+  function openModal(src, title) {
+    document.getElementById('modalImg').src = src;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modal').classList.add('open');
+  }
+
+  /**
+   * [팝업 함수 2] closeModal
+   * - 팝업 숨김
+   */
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  /**
+   * [팝업 이벤트] X 버튼 / 어두운 배경 클릭 / ESC 키로 닫기
+   */
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modal').addEventListener('click', (e) => {
+    if (e.target.id === 'modal') closeModal(); // 팝업 본체가 아닌 배경을 눌렀을 때만
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  /**
+   * [실행 함수] init
+   * - 데이터 요청 -> 렌더링 흐름을 묶고, 실패 시 화면에 에러 메시지 표시
+   */
+  async function init() {
+    const container = document.getElementById('gallery');
+    try {
+      const photos = await getPhotos(30);
+      renderGallery(container, photos);
+    } catch (err) {
+      container.innerHTML = `<p class="message">불러오기 실패: ${err.message}</p>`;
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>

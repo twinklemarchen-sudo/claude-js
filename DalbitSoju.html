@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dalbit Soju</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./CSS/DalbitSoju.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="logo">DALBIT<span class="accent">.</span></div>
+    <nav class="nav">
+      <a href="#flavors">Flavors</a><a href="#moments">Moments</a><a href="#stories">Stories</a><a href="#">Where to buy</a>
+    </nav>
+    <div class="header-actions">
+      <div class="pill-outline">EN</div>
+      <div class="pill-solid">Contact</div>
+    </div>
+  </header>
+
+  <!-- 히어로 -->
+  <section class="hero">
+    <div class="hero-title">Pour the <em>Moonlight</em></div>
+    <div class="hero-copy">
+      <div class="badge">New release</div>
+      <div class="hero-name">DALBIT<br>WHITE PEACH</div>
+      <p>Soft, ripe peach over a clean rice base. 13% ABV, best served ice-cold.</p>
+      <div><a href="#flavors" class="btn-dark">View more</a></div>
+    </div>
+    <div class="ph hero-img">hero portrait + bottle</div>
+    <div class="cheers">CHEERS</div>
+  </section>
+
+  <!-- 상단 마퀴: DalbitSoju.js에서 채움 -->
+  <div class="marquee marquee-top" id="marqueeTop"></div>
+
+  <!-- 맛 -->
+  <section id="flavors" class="flavors">
+    <div class="flavors-head">
+      <h2>Find your<br><span class="serif">flavor.</span></h2>
+      <div class="arrows">
+        <button class="arrow" id="prevBtn" aria-label="Previous">←</button>
+        <button class="arrow" id="nextBtn" aria-label="Next">→</button>
+      </div>
+    </div>
+    <div class="track-wrap">
+      <div class="track" id="flavorTrack"></div>
+    </div>
+  </section>
+
+  <!-- 순간 -->
+  <section id="moments" class="moments">
+    <div class="moments-head">
+      <h2>MOONLIT<br>MOMENTS</h2>
+      <p>Every glass, a small ritual.</p>
+    </div>
+    <div class="moments-grid" id="momentsGrid"></div>
+  </section>
+
+  <!-- 이야기 -->
+  <section id="stories" class="stories">
+    <h2>From the <span class="serif">table</span></h2>
+    <div class="stories-grid" id="storiesGrid"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="marquee" id="marqueeTag"></div>
+    <div class="socials"><span></span><span></span><span></span><span></span></div>
+    <div class="footer-bottom">
+      <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+      <div>Please drink responsibly. © 2026 Dalbit</div>
+    </div>
+  </footer>
+</div>
+
+<script src="./js/DalbitSoju.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>크레딧노트</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="./CSS/Credit.css">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="util"><a href="#">로그인</a><a href="#">회원가입</a></div>
+  <header>
+    <div class="logo"><div class="logo-mark"></div><span class="logo-text">크레딧노트</span></div>
+    <div class="gnb">
+      <button class="menu-btn">전체메뉴 <span class="burger"><span></span><span></span><span></span></span></button>
+      <span id="search" class="search"></span>
+    </div>
+  </header>
+
+  <!-- 검색 모달 -->
+  <div class="search-modal">
+    <div class="search-modal-backdrop"></div>
+    <div class="search-modal-content">
+      <div class="search-modal-top">
+        <input type="text" placeholder="메뉴, 요금제 등을 검색해 보세요" class="search-modal-input">
+        <button class="search-modal-close">✕</button>
+      </div>
+
+      <div class="search-modal-body">
+        <!-- 최근 검색어 -->
+        <div class="search-section">
+          <div class="search-section-header">
+            <h3>최근 검색어</h3>
+            <span class="search-section-action">자동저장 끄기</span>
+          </div>
+          <p class="search-empty-msg">최근 검색한 내역이 없습니다.</p>
+        </div>
+
+        <!-- 인기 검색어 -->
+        <div class="search-section">
+          <div class="search-section-header">
+            <h3>인기 검색어</h3>
+            <span class="search-section-date">2026.10.18 기준</span>
+          </div>
+          <div class="search-ranking">
+            <div class="search-ranking-col">
+              <a href="#"><span class="rank">1</span> 모임</a>
+              <a href="#"><span class="rank">2</span> 쿠폰</a>
+              <a href="#"><span class="rank">3</span> 꿀미니</a>
+            </div>
+            <div class="search-ranking-col">
+              <a href="#"><span class="rank">4</span> 이벤트</a>
+              <a href="#"><span class="rank">5</span> 남부</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 추천 검색어 -->
+        <div class="search-section">
+          <h3>추천 검색어</h3>
+          <div class="search-tags">
+ 
+          </div>
+        </div>
+
+     
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 전체메뉴 팝업 -->
+  <div class="menu-popup">
+    <a href="#">자유게시판 <span>›</span></a>
+    <a href="#">궁금사항 <span>›</span></a>
+    <a href="#">고객제안의의 <span>›</span></a>
+    <a href="#">K-클림 안내 <span>›</span></a>
+  </div>
+
+  <!-- 히어로 -->
+  <div class="hero" id="hero">
+    <div id="small" class="hero-card small">
+      <!-- #small 내부에만 적용되는 독립 Swiper -->
+      <div class="swiper small-swiper" aria-label="기업 서비스 안내 배너">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="label">내 신용도는 봤는데</div>
+            <div class="hero-sub">우리 회사는?<br>기업 신용평가</div>
+            <div class="ph ph-3d">3D 아이콘</div>
+          </div>
+          <div class="swiper-slide">
+            <div class="label">기업 신용 관리</div>
+            <div class="hero-sub">우리 회사의<br>신용등급 확인</div>
+            <div class="ph ph-3d">등급 아이콘</div>
+          </div>
+          <div class="swiper-slide">
+            <div class="label">사업자 맞춤 서비스</div>
+            <div class="hero-sub">사업 운영에<br>필요한 신용정보</div>
+            <div class="ph ph-3d">사업 아이콘</div>
+          </div>
+          <div class="swiper-slide">
+            <div class="label">놓치기 쉬운 정보</div>
+            <div class="hero-sub">기업 신용변동<br>한눈에 확인</div>
+            <div class="ph ph-3d">알림 아이콘</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="red" class="hero-card red">
+      <div class="hero-title">내 신용점수는?</div>
+      <div class="hero-row">
+        <div class="score"><span class="big-num" id="score-display">?</span><span class="score-unit">점 ›</span></div>
+        <div class="score-side">
+          <span class="bubble">몇 점일까요?</span>
+          <div class="ph ph-char">캐릭터</div>
+        </div>
+      </div>
+      <div class="red-tabs">
+        <button class="tab-btn active" data-score="800">대출</button>
+        <button class="tab-btn" data-score="650">카드</button>
+        <button class="tab-btn" data-score="720">연체</button>
+      </div>
+    </div>
+    <div class="hero-card white">
+      <div class="hero-title">내 소득그룹은?</div>
+      <div class="hero-row">
+        <span class="big-num">? <small>›</small></span>
+        <div class="ph ph-coin">코인</div>
+      </div>
+      <div class="hero-foot">소득 변동 여부를 확인하세요</div>
+    </div>
+    <div class="hero-card white">
+      <div class="hero-title">내 자산 현황은?</div>
+      <span class="big-num solo">? <small>›</small></span>
+      <div class="hero-foot">흩어진 계좌를 한눈에</div>
+    </div>
+  </div>
+  <div class="dots hero-dots" id="heroDots"></div>
+
+  <!-- 보호 서비스 -->
+  <div class="protect" id="protect">
+    <!-- 차단 카드 2개는 Credit.js에서 앞에 추가 -->
+    <div class="side">
+      <div class="side-card pink">
+        <div><div class="label">개인정보 보호 서비스</div><div class="card-title">이용권 번호 등록하기</div></div>
+        <div class="ph"></div>
+      </div>
+      <div class="side-card purple">
+        <div><div class="label">신용점수 영향 없이</div><div class="card-title">대출한도 알아보기</div></div>
+        <div class="ph"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 서비스 -->
+  <h2>이런 서비스는 어떠세요?</h2>
+  <div class="services" id="services"></div>
+
+  <!-- 광고 배너 -->
+  <div class="banner-row">
+    <div class="ad">
+      <div class="ad-top">
+        <div><div class="ad-title" id="adTitle"></div><div class="ad-desc" id="adDesc"></div></div>
+        <div class="ad-big" id="adBig"></div>
+      </div>
+      <div class="dots" id="adDots"><span class="ad-note">광고 · 심의필 예시번호</span></div>
+    </div>
+    <div class="side-card gray">
+      <div><div class="label">이번 달</div><div class="card-title">혜택 좋은 카드는?</div></div>
+      <div class="ph">카드 이미지</div>
+    </div>
+  </div>
+
+  <!-- 혜택 정보 -->
+  <h2>모르면 손해, 놓치면 안 되는 <span class="point">혜택 정보</span></h2>
+  <div class="benefits" id="benefits"></div>
+
+  <h2>세상에 이런 혜택이</h2>
+  <div class="perks" id="perks">
+    <!-- 혜택 카드 4개는 Credit.js에서 앞에 추가 -->
+    <a href="#" class="perk cta">담보계산기로<br>예측하기</a>
+  </div>
+
+  <!-- 공지 -->
+  <div class="notice">
+    <a href="#" class="notice-title">알려드려요 ›</a>
+    <span class="notice-text">신용변동알림 서비스 일시 중단 안내</span>
+    <span class="notice-date">2026.09.23</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-in">
+    <div>
+      <nav class="footer-nav"><a href="#">회사소개</a><a href="#">개인정보처리방침</a><a href="#">이용약관</a><a href="#">신용평점체계공시</a><a href="#">저작권 정책</a><a href="#">사이트맵</a></nav>
+      <div class="footer-info">(주)크레딧노트 · 서울특별시 중구 예시로 00 · 대표이사 홍길동<br>사업자등록번호 000-00-00000 · 통신판매업신고 0000-서울중구-0000<br>COPYRIGHT © CREDITNOTE. ALL RIGHTS RESERVED.</div>
+    </div>
+    <div class="cs">
+      <div class="cs-row"><span class="cs-label">고객센터</span><span class="cs-tel">1500-0000</span></div>
+      <div class="cs-mail">help@creditnote.example</div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="./js/Credit.js"></script>
+</body>
+</html>

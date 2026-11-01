@@ -1,0 +1,81 @@
+:root {
+  --green: #00cd3c;
+  --purple: #503396;
+  --ink: #1e1e1e;
+  --sub: #777;
+  --line: #e4e4e4;
+  --bg: #fff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Malgun Gothic', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+ol { list-style: none; }
+button { font: inherit; cursor: pointer; border: 0; background: none; }
+
+/* header */
+.mel-header { border-bottom: 2px solid #444; }
+.mel-header-in {
+  max-width: 1100px; margin: 0 auto; padding: 0 16px; height: 60px;
+  display: flex; align-items: center; gap: 16px;
+}
+.mel-logo { font-size: 28px; font-weight: 800; letter-spacing: -1px; color: var(--green); }
+.mel-tab { font-size: 14px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--green); color: #fff; }
+
+/* layout */
+.mel-wrap { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
+.mel-section + .mel-section { margin-top: 48px; }
+.mel-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.mel-title-row h2 { font-size: 26px; font-weight: 500; letter-spacing: -0.5px; }
+
+.mel-nav { display: flex; gap: 8px; }
+.mel-nav button {
+  width: 36px; height: 36px; border: 1px solid var(--line); background: #fff;
+  font-size: 22px; line-height: 1; color: var(--ink);
+}
+.mel-nav button:hover { border-color: var(--purple); color: var(--purple); }
+.mel-nav button.swiper-button-disabled { opacity: .35; cursor: default; }
+
+/* 공통: 포스터 + 순위 숫자 */
+.mel-poster { position: relative; aspect-ratio: 1; background: #ddd; overflow: hidden; }
+.mel-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mel-rank {
+  position: absolute; left: 8px; top: 4px; z-index: 1;
+  font-size: 34px; font-weight: 500; font-style: italic; color: #fff; line-height: 1.2;
+  text-shadow: 0 1px 4px rgba(0,0,0,.65);
+}
+
+.mel-title { margin-top: 10px; font-size: 17px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mel-artist { margin-top: 4px; font-size: 13px; color: var(--sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.mel-actions { margin-top: 12px; display: flex; gap: 4px; }
+.mel-like {
+  flex: 0 0 auto; min-width: 72px; padding: 0 10px; height: 34px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  border: 1px solid var(--line); font-size: 13px; color: #555; background: #fff;
+}
+.mel-like::before { content: '♡'; font-size: 16px; }
+.mel-play { flex: 1; height: 34px; background: var(--purple); color: #fff; font-size: 14px; font-weight: 500; }
+.mel-play:hover { background: #3f2678; }
+
+/* slider */
+.top-swiper { padding-bottom: 38px; }
+.top-swiper .swiper-slide { height: auto; }
+.swiper-pagination-bullet-active { background: var(--purple); }
+
+/* 목록: 4열 그리드 */
+.mel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px 20px; }
+
+@media (max-width: 900px) { .mel-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) {
+  .mel-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 12px; }
+  .mel-title-row h2 { font-size: 20px; }
+  .mel-rank { font-size: 28px; }
+}
+
+.mel-error { margin-top: 24px; padding: 16px; background: #fff3f3; color: #c0392b; font-size: 14px; line-height: 1.6; }
